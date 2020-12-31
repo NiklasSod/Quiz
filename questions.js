@@ -12,8 +12,8 @@ class Questions {
     showCurrentQuestion() {
         let currentQuestion = document.getElementById("currentQuestion");
 
-        showUserCurrentQuestion.innerHTML = "Fråga: " + (currentQuestionNr + 1) + " / 10";
-        currentQuestion.innerHTML = this.questions[currentQuestionNr].question;
+        showUserCurrentQuestion.innerHTML = "Question: " + (currentQuestionNr + 1) + " / 10";
+        currentQuestion.innerText = this.questions[currentQuestionNr].question;
         currentQuestionNr++
     }
 

@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", (e) => {
+let player = new Player();
+
     let quizApi = "https://quizapi.io/api/v1/questions?apiKey=7HEMuIla3VnkS52lZemeOXarWH5JBYssoxWODP0R&category=code&difficulty=easy&limit=10";
 
     async function fetchQuizData() {
@@ -12,7 +14,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
     }
 
     let playerName = document.getElementById("chooseName");
-    let currentPlayerScore = 0; // fix
 
     // Kallar på api, startar spelet, sparar användarnamn.
     let startButton = document.getElementById("startButton");
@@ -21,8 +22,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
         if(playerName.value == ""){
             alert("Choose a name");
         }else{
-            let player = new Player(playerName.value, 0);
-            player.welcomePlayer();
+            player.setPlayerName(playerName.value);
+            player.setPlayerScore(0);
+            // let player = new Player(playerName.value, 0);
             fetchQuizData();
             startButton.style.display = "none";
             nextButton.style.display = "block";
@@ -32,7 +34,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
     let nextButton = document.getElementById("nextButton");
     nextButton.addEventListener("click", () => {
+        player.setPlayerScore(0);
+
         questions.showCurrentQuestion();
+
         if (currentQuestionNr == 10) {
             doneButton.style.display = "block";
             nextButton.style.display = "none";
@@ -46,11 +51,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
     let restartButton = document.getElementById("restartButton");
     restartButton.addEventListener("click", () => {
-        if (confirm("Är du säker på att du vill starta om?")) {
+        if (confirm("Are you sure you want to restart?")) {
             location.reload();
         }
     })
-
     nextButton.style.display = "none";
     restartButton.style.display = "none";
     doneButton.style.display = "none";

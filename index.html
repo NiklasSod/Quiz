@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div id="playerStats">
+        <h4 id="playerName"></h4>
+        <h4 id="showUserCurrentQuestion"></h4>
+    </div>
+    <hr>
+    <br>
+    <form id="chooseNameForm">
+        <label for="chooseName">Choose a name:</label>
+        <input type="text" id="chooseName" name="chooseName">
+    </form>
+    <br>
+    
+    <div id="myButtons">
+        <button id="startButton">Starta spel</button>
+        <button id="nextButton">Nästa fråga</button>
+        <button id="doneButton">Lämna in resultat</button>
+        <button id="restartButton">Starta om spelet</button>
+    </div>
+    
+
+    <div id="gamePlace">
+        <strong id="currentQuestion"></strong>
+        <h4 id="currentAnswers"></h4>
+    </div>
+
+    <script src="game.js"></script>
+    <script src="questions.js"></script>
+    <script src="question.js"></script>
+    <script src="player.js"></script>
+</body>
+</html>

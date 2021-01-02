@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", (e) => {
-let player = new Player();
+    let player = new Player(0);
 
     let quizURL = "https://quizapi.io/api/v1/questions?apiKey=7HEMuIla3VnkS52lZemeOXarWH5JBYssoxWODP0R&category=code&difficulty=easy&limit=10";
 
@@ -20,22 +20,36 @@ let player = new Player();
     let startButton = document.getElementById("startButton");
     startButton.addEventListener("click", () => {
         // If player forgets to add something as name
-        if(playerName.value == ""){
+        if (playerName.value == "") {
             alert("Choose a name");
-        }else{
-            player.setPlayerName(playerName.value);
-            player.setPlayerScore(0);
+        } else {
+            // player.setPlayerName(playerName.value);
+            player.playerScore = 0;
+            player.updateMessage();
+
             // let player = new Player(playerName.value, 0);
             fetchQuizData();
             startButton.style.display = "none";
             nextButton.style.display = "block";
             restartButton.style.display = "block";
         }
+
     })
 
     let nextButton = document.getElementById("nextButton");
     nextButton.addEventListener("click", () => {
-        player.setPlayerScore(0);
+        let correctAnswers = questions.getAllCorrectAnswersForPreviousQuestion();
+        console.log(correctAnswers);
+        let checkedAnswers = questions.getCheckedChecboxesForPreviousQuestion();
+        console.log(checkedAnswers);
+
+        if (JSON.stringify(correctAnswers) == JSON.stringify(checkedAnswers)) {
+            console.log("#");
+            player.playerScore += 1;
+            player.updateMessage();
+            console.log("score " +player.playerScore);
+        }
+
 
         questions.showCurrentQuestion();
         questions.showCurrentAnswerOptions();

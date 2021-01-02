@@ -4,7 +4,6 @@ class Player {
     constructor() { }
     setPlayerScore(score) {
         this.playerScore = score;
-        // this.playerScore = score;
         console.log("Hej");
         // must update +1 on correct answered question
         // so setPlayerScore should trigger on next cuestion press when answer is correct

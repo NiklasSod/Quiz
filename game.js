@@ -1,16 +1,17 @@
 document.addEventListener("DOMContentLoaded", (e) => {
 let player = new Player();
 
-    let quizApi = "https://quizapi.io/api/v1/questions?apiKey=7HEMuIla3VnkS52lZemeOXarWH5JBYssoxWODP0R&category=code&difficulty=easy&limit=10";
+    let quizURL = "https://quizapi.io/api/v1/questions?apiKey=7HEMuIla3VnkS52lZemeOXarWH5JBYssoxWODP0R&category=code&difficulty=easy&limit=10";
 
     async function fetchQuizData() {
         const response = await fetch(
-            quizApi
+            quizURL
         );
         const data = await response.json();
         questions = new Questions(data);
         console.log(questions); // remove later
         questions.showCurrentQuestion();
+        questions.showCurrentAnswerOptions();
     }
 
     let playerName = document.getElementById("chooseName");
@@ -37,6 +38,7 @@ let player = new Player();
         player.setPlayerScore(0);
 
         questions.showCurrentQuestion();
+        questions.showCurrentAnswerOptions();
 
         if (currentQuestionNr == 10) {
             doneButton.style.display = "block";

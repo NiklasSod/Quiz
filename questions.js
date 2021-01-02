@@ -18,7 +18,6 @@ class Questions {
     }
 
     showCurrentAnswerOptions() {
-        let currentAnswers = document.getElementById("currentAnswers");
         let answers = this.questions[currentQuestionNr - 1].answers;
         let answerOptions = [];
         
@@ -27,6 +26,32 @@ class Questions {
                 answerOptions.push(`${value}`);
             }
         }
-        console.log(answerOptions);
+        console.log(answerOptions); // ta bort sen
+        this.createAnswerOptions(answerOptions);
+    }
+
+    // skapar rätt mängd div med checkbox + fråga
+    createAnswerOptions(answerOptions) {
+        
+        currentAnswers.innerText = "";
+
+        for (let i = 0; i < answerOptions.length; i++) {
+            let checkbox = document.createElement("INPUT");
+            checkbox.setAttribute("type", "checkbox");
+            checkbox.setAttribute("id", [i]);
+            checkbox.className = "checkbox";
+
+            let oneAnswer = document.createElement("div");
+            oneAnswer.appendChild(checkbox);
+
+            let test = document.createElement("p");
+            test.innerText = answerOptions[i];
+            oneAnswer.appendChild(test);
+
+            let currentAnswers = document.getElementById("currentAnswers");
+            currentAnswers.appendChild(oneAnswer);
+
+            console.log(checkbox); // ta bort sen
+        }
     }
 }

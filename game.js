@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", (e) => {
-    let player = new Player(0);
+
+    let player = new Player("tmp", 0);
 
     let quizURL = "https://quizapi.io/api/v1/questions?apiKey=7HEMuIla3VnkS52lZemeOXarWH5JBYssoxWODP0R&category=code&difficulty=easy&limit=10";
 
@@ -23,8 +24,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
         if (playerName.value == "") {
             alert("Choose a name");
         } else {
-            // player.setPlayerName(playerName.value);
+            localStorage.setItem("playerName", playerName.value);
             player.playerScore = 0;
+            player.setName(playerName.value);
             player.updateMessage();
 
             // let player = new Player(playerName.value, 0);
@@ -38,19 +40,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
     let nextButton = document.getElementById("nextButton");
     nextButton.addEventListener("click", () => {
-        let correctAnswers = questions.getAllCorrectAnswersForPreviousQuestion();
-        console.log(correctAnswers);
-        let checkedAnswers = questions.getCheckedChecboxesForPreviousQuestion();
-        console.log(checkedAnswers);
-
-        if (JSON.stringify(correctAnswers) == JSON.stringify(checkedAnswers)) {
-            console.log("#");
-            player.playerScore += 1;
-            player.updateMessage();
-            console.log("score " +player.playerScore);
-        }
-
-
+        calculateScore(player);
         questions.showCurrentQuestion();
         questions.showCurrentAnswerOptions();
 
@@ -62,7 +52,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
     let doneButton = document.getElementById("doneButton");
     doneButton.addEventListener("click", () => {
-        console.log("Grattis mannen") // fix
+        doneButton.style.display = "none";
+        calculateScore(player);
+        currentQuestionDiv.innerHTML = "Congrats, " + playerName.value + ". Your score: " + player.playerScore + " / 10";
+        currentAnswersDiv.innerHTML = "";
     })
 
     let restartButton = document.getElementById("restartButton");
@@ -71,7 +64,27 @@ document.addEventListener("DOMContentLoaded", (e) => {
             location.reload();
         }
     })
+
     nextButton.style.display = "none";
     restartButton.style.display = "none";
     doneButton.style.display = "none";
+
+    // used to remove text with doneButton
+    currentQuestionDiv = document.getElementById("currentQuestion");
+    currentAnswersDiv = document.getElementById("currentAnswers");
 })
+
+
+function calculateScore(player) {
+    let correctAnswers = questions.getAllCorrectAnswersForPreviousQuestion();
+        console.log(correctAnswers);
+        let checkedAnswers = questions.getCheckedChecboxesForPreviousQuestion();
+        console.log(checkedAnswers);
+
+        // if user checked correct checkboxes, update score.
+        if (JSON.stringify(correctAnswers) == JSON.stringify(checkedAnswers)) {
+            player.playerScore += 1;
+            player.updateMessage();
+            console.log("score " +player.playerScore);
+        }
+}

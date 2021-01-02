@@ -1,5 +1,4 @@
 let currentQuestionNr = 0;
-// let currentAnswerOptionsNr = 0;
 
 class Questions {
     constructor(questions) {
@@ -9,6 +8,8 @@ class Questions {
             this.questions.push(new Question(question));
         }
     }
+
+    // Visa frågan för användaren.
     showCurrentQuestion() {
         let currentQuestion = document.getElementById("currentQuestion");
 
@@ -17,8 +18,7 @@ class Questions {
         currentQuestionNr++;
     }
 
-
-    // skapar rätt mängd div med checkbox + fråga
+    //Skapar div och checkboxar beroende på antal svarsaltrernativ.
     createAnswerOptions(answerOptions) {
         currentAnswers.innerText = "";
 
@@ -37,21 +37,17 @@ class Questions {
 
             let currentAnswers = document.getElementById("currentAnswers");
             currentAnswers.appendChild(oneAnswer);
-
-            console.log(checkbox); // ta bort sen
         }
     }
 
+    //Visa svars alternativ med checkboxar för användare.
     showCurrentAnswerOptions() {
         let answerOptions = this.getAnswersForPreviousQuestion();
-        // console.log(answerOptions); // ta bort sen
         this.createAnswerOptions(answerOptions);
     }
 
-
     //Hämta föregående fråga
     getPreviousQuestion() {
-
         if (currentQuestionNr < 11 && currentQuestionNr > 0) {
             return this.questions[currentQuestionNr - 1];
         } else {
@@ -59,6 +55,20 @@ class Questions {
         }
     }
 
+    //Hämta alla svar för föregående fråga och returnera en lista med dessa.
+    getAnswersForPreviousQuestion() {
+        let answers = this.getPreviousQuestion().answers; 
+        let answerOptions = [];
+
+        for (const [key, value] of Object.entries(answers)) {
+            if (value != null) {
+                answerOptions.push(`${value}`);
+            }
+        }
+        return answerOptions;
+    }
+
+    //Hämta alla correct_answers för föregående fråga och returnera en lista av dessa.
     getAllAnswerOptionsForPreviousQuestion() {
         let previousQuestion = this.getPreviousQuestion();
         let allAnswerOptions = [];
@@ -68,47 +78,28 @@ class Questions {
         return allAnswerOptions;
     }
 
+    //Filtrera correct_answers objektet så att vi bara har korrekta svar och returnerna det som en lista.
     getAllCorrectAnswersForPreviousQuestion() {
         let allAnswerOptions = this.getAllAnswerOptionsForPreviousQuestion();
         let correctAnswersOptions = allAnswerOptions.filter((x) => x.includes("true"));
 
-        // console.log("korrekta");
-        // console.log(correctAnswersOptions);
         correctAnswersOptions.sort();
         return correctAnswersOptions;
     }
 
+    //Kolla vilka checkboxes användaren har valt och returnera en lista med dessa.
     getCheckedChecboxesForPreviousQuestion() {
-
         let answerOptions = this.getAnswersForPreviousQuestion();
         let listOfAllAnswerOptions = this.getAllAnswerOptionsForPreviousQuestion();
         console.log(listOfAllAnswerOptions);
         let answeredOptions = [];
 
-
         for (let i = 0; i < answerOptions.length; i++) {
-
             if (document.getElementById(i).checked == true) {
-                // optionCount++;
                 answeredOptions.push(listOfAllAnswerOptions[i]);
             }
         }
-        // console.log("svarade");
         answeredOptions.sort();
-        // console.log(answeredOptions);
         return answeredOptions;
-    }
-
-
-    getAnswersForPreviousQuestion() {
-        let answers = this.questions[currentQuestionNr - 1].answers;
-        let answerOptions = [];
-
-        for (const [key, value] of Object.entries(answers)) {
-            if (value != null) {
-                answerOptions.push(`${value}`);
-            }
-        }
-        return answerOptions;
     }
 }

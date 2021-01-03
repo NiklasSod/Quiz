@@ -9,16 +9,16 @@ class Questions {
         }
     }
 
-    // Visa frågan för användaren.
+    // Show question to user
     showCurrentQuestion() {
         let currentQuestion = document.getElementById("currentQuestion");
 
-        showUserCurrentQuestion.innerHTML = "Question: " + (currentQuestionNr + 1) + " / 10";
+        showUserCurrentQuestion.innerHTML = `Question: ${currentQuestionNr + 1} / 10`;
         currentQuestion.innerText = this.questions[currentQuestionNr].question;
         currentQuestionNr++;
     }
 
-    //Skapar div och checkboxar beroende på antal svarsaltrernativ.
+    // Creates divs with checkboxes and answer alternatives depending on answer.length
     createAnswerOptions(answerOptions) {
         currentAnswers.innerText = "";
 
@@ -40,13 +40,13 @@ class Questions {
         }
     }
 
+    //!!!!!!!!!!!!!!!!!!!
     //Visa svars alternativ med checkboxar för användare.
     showCurrentAnswerOptions() {
         let answerOptions = this.getAnswersForPreviousQuestion();
         this.createAnswerOptions(answerOptions);
     }
 
-    //Hämta föregående fråga
     getPreviousQuestion() {
         if (currentQuestionNr < 11 && currentQuestionNr > 0) {
             return this.questions[currentQuestionNr - 1];
@@ -55,7 +55,7 @@ class Questions {
         }
     }
 
-    //Hämta alla svar för föregående fråga och returnera en lista med dessa.
+    // All prev answers, returns a list
     getAnswersForPreviousQuestion() {
         let answers = this.getPreviousQuestion().answers; 
         let answerOptions = [];
@@ -68,7 +68,7 @@ class Questions {
         return answerOptions;
     }
 
-    //Hämta alla correct_answers för föregående fråga och returnera en lista av dessa.
+    //All prev correct_answers, returns a list
     getAllAnswerOptionsForPreviousQuestion() {
         let previousQuestion = this.getPreviousQuestion();
         let allAnswerOptions = [];
@@ -78,7 +78,7 @@ class Questions {
         return allAnswerOptions;
     }
 
-    //Filtrera correct_answers objektet så att vi bara har korrekta svar och returnerna det som en lista.
+    //Filter correct_answers object with only correct, returns a list
     getAllCorrectAnswersForPreviousQuestion() {
         let allAnswerOptions = this.getAllAnswerOptionsForPreviousQuestion();
         let correctAnswersOptions = allAnswerOptions.filter((x) => x.includes("true"));
@@ -87,11 +87,11 @@ class Questions {
         return correctAnswersOptions;
     }
 
-    //Kolla vilka checkboxes användaren har valt och returnera en lista med dessa.
+    //Checking checked checkboxes, returns a list
     getCheckedChecboxesForPreviousQuestion() {
         let answerOptions = this.getAnswersForPreviousQuestion();
         let listOfAllAnswerOptions = this.getAllAnswerOptionsForPreviousQuestion();
-        console.log(listOfAllAnswerOptions);
+        console.log("listOfAllAnswerOptions:" + listOfAllAnswerOptions);
         let answeredOptions = [];
 
         for (let i = 0; i < answerOptions.length; i++) {

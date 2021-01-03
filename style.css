@@ -38,3 +38,11 @@ button:hover {
     float: left;
     margin-right: 1em;
 }
+
+#gamePlace {
+    padding: 1em;
+}
+
+#currentAnswers {
+    padding-top: 0.6em;
+}

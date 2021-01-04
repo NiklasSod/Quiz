@@ -4,6 +4,7 @@ class Player {
         this.playerScore = playerScore;
     }
 
+    // updates temporary playername with users choice
     setName(localName) {
         this.playerName = localName;
     }

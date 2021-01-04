@@ -91,7 +91,7 @@ class Questions {
     getCheckedChecboxesForPreviousQuestion() {
         let answerOptions = this.getAnswersForPreviousQuestion();
         let listOfAllAnswerOptions = this.getAllAnswerOptionsForPreviousQuestion();
-        console.log("listOfAllAnswerOptions:" + listOfAllAnswerOptions);
+        // console.log("listOfAllAnswerOptions:" + listOfAllAnswerOptions);
         let answeredOptions = [];
 
         for (let i = 0; i < answerOptions.length; i++) {

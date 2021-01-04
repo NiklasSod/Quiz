@@ -6,13 +6,14 @@
 
 #playerStats {
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     padding: 0.6em;
 }
 
 #playerName {
     font-style: italic;
     font-size: large;
+    padding-right: 2em;
 }
 
 #chooseNameForm {

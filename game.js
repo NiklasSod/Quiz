@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
     let player = new Player("tmp", 0);
     let playerName = document.getElementById("chooseName");
+    document.getElementById("playerName").innerHTML = "Welcome";
 
     let quizURL = "https://quizapi.io/api/v1/questions?apiKey=7HEMuIla3VnkS52lZemeOXarWH5JBYssoxWODP0R&category=code&difficulty=easy&limit=10";
 
@@ -11,7 +12,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
         );
         const data = await response.json();
         questions = new Questions(data);
-        console.log(questions);
+        // console.log(questions);
         questions.showCurrentQuestion();
         questions.showCurrentAnswerOptions();
     }
@@ -52,9 +53,11 @@ document.addEventListener("DOMContentLoaded", (e) => {
     let doneButton = document.getElementById("doneButton");
     doneButton.addEventListener("click", () => {
         doneButton.style.display = "none";
+        restartButton.innerHTML = "Play again?";
         calculateScore(player);
         currentQuestionDiv.innerHTML = `Congratulations ${playerName.value}. Your score: ${player.playerScore} / 10.`;
         currentAnswersDiv.innerHTML = "";
+        playerStats.innerHTML = "ฅ^•ﻌ•^ฅ --- (ᵔᴥᵔ) --- (=✪ᆽ✪=)♡";
     })
 
     let restartButton = document.getElementById("restartButton");
@@ -75,14 +78,11 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 function calculateScore(player) {
     let correctAnswers = questions.getAllCorrectAnswersForPreviousQuestion();
-        console.log("correctAnswers:" + correctAnswers);
         let checkedAnswers = questions.getCheckedChecboxesForPreviousQuestion();
-        console.log("checkedAnswers:" + checkedAnswers);
 
         // if user checked correct checkboxes, update score.
         if (JSON.stringify(correctAnswers) == JSON.stringify(checkedAnswers)) {
             player.playerScore += 1;
             player.updateMessage();
-            console.log("score: " + player.playerScore);
         }
 }
